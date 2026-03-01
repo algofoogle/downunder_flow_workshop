@@ -21,16 +21,23 @@ module tt_um_explorer
   assign uio_oe  = 0;
 
   // List all unused inputs to prevent warnings
-  wire		     _unused = &{ena, clk, rst_n, 1'b0};
+  wire		     _unused = &{ena, clk, rst_n, 1'b0, ui_in};
 
   wire [100:0]	     stage; // 101 nodes: stage[0] through stage[100]
   // 100 inverter stages
   genvar	     i;
   generate
     for (i = 0; i < 100; i = i + 1) begin : inv_stage
-      (* keep *) sky130_fd_sc_hd__inv_1 u_inv 
-	     (.Y (stage[i+1]),
-	      .A (stage[i]));
+      if(i==0) begin
+	(* keep *) sky130_fd_sc_hd__inv_1 u_inv 
+	  (.A (stage[100]),
+	   .Y (stage[0]));
+      end
+      else begin
+	(* keep *) sky130_fd_sc_hd__inv_1 u_inv 
+	  (.A (stage[i]),
+	   .Y (stage[i+1]));
+      end
     end
   endgenerate
 
