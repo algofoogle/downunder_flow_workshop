@@ -41,6 +41,6 @@ module tt_um_explorer
     end
   endgenerate
  
-	assign uo_out = {_unused, 6'd0, stage[100]};
+	assign uo_out = {_unused, ui_in[0], 5'd0, stage[100]};
 
 endmodule
