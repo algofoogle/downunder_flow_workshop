@@ -27,20 +27,20 @@ module tt_um_explorer
   // 100 inverter stages
   genvar	     i;
   generate
-    for (i = 0; i < 100; i = i + 1) begin : inv_stage
-      if(i==0) begin
+	  for (i = 0; i <= 100; i = i + 1) begin : inv_stage
+		  if(i==100) begin
 	(* keep *) sky130_fd_sc_hd__inv_1 u_inv 
-	  (.A (stage[100]),
+	  (.A (stage[100]), // Covers 100=>0.
 	   .Y (stage[0]));
       end
       else begin
 	(* keep *) sky130_fd_sc_hd__inv_1 u_inv 
-	  (.A (stage[i]),
+	  (.A (stage[i]), // Covers 0=>1, 1=>2, ... 99=>100.
 	   .Y (stage[i+1]));
       end
     end
   endgenerate
-
+ 
   assign uo_out = {7'd0, stage[100]};
 
 endmodule
