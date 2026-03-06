@@ -18,10 +18,10 @@ module tt_um_explorer
 
   // All output pins must be assigned. If not used, assign to 0.
   assign uio_out = 8'd50;
-  assign uio_oe  = 0;
+  assign uio_oe  = 8'b1111_1111;
 
   // List all unused inputs to prevent warnings
-  wire		     _unused = &{ena, clk, rst_n, 1'b0, ui_in};
+	wire		     _unused = &{ena, clk, rst_n, ui_in, uio_in, 1'b0};
 
   wire [100:0]	     stage; // 101 nodes: stage[0] through stage[100]
   // 100 inverter stages
